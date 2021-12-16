@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orderactorservice
+  labels:
+    app: orderactorservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: orderactorservice
+  template:
+    metadata:
+      labels:
+        app: orderactorservice
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "orderactorservice"
+        dapr.io/app-port: "80"
+    spec:
+      containers:
+      - name: orderactorservice
+        image: daprsamples.azurecr.io/daprdinner/orderactorservice
+        ports:
+        - containerPort: 80
+        imagePullPolicy: Always
+        

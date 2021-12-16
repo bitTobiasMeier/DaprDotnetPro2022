@@ -1,0 +1,84 @@
+﻿@page
+@using RestaurantService.Contracts.Domain
+@using TableActor.Contracts
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+    var tableNr = ViewData["tableNr"];
+    var orders = ViewData["orders"] != null ? (IList<TableOrder>)ViewData["orders"] : new List<TableOrder>();
+
+}
+
+<div class="text-center">
+    <h1 class="menue-title">Menükarte</h1>
+    @foreach (var dish in (IEnumerable<Dish>)ViewData["Menu"])
+    {
+        <div class="card col-md-3 mb-3" id="card-dish">
+            <div class="card-header card-select-dish">
+                <h3 class="menue-title" bg-primary>@dish.Title</h3>
+                </div>
+                 <div class="card-body card-select-dish">
+
+
+                
+
+                <div class="menue-price">Preis: @dish.Price €</div>
+                <img class="card-img-top dishimg" src="@dish.ImageUrl" alt="@dish.Title">
+
+                <div class="menue-text">@dish.Description</div><br />
+
+                 </div>
+                 <div class="card-footer card-select-dish">
+
+                <form asp-page-handler="order" method="post">
+
+                    <input type="hidden" name="id" value="@dish.Id" />
+                    <div class="menue-text">Tisch: <input type="text" name="tableNr" class="smallinput" value="@tableNr" /></div>
+                    <input type="hidden" name="dishName" value="@dish.Title" />
+                    <input type="hidden" name="dishPrice" value="@dish.Price" />
+                    <hr />
+                    <button class="btn btn-primary">Bestellen</button>
+                </form>
+            </div>
+
+
+        </div>
+
+    }
+
+
+    </div>
+  
+    <div>
+        <hr />
+    <h1 class="menue-title">Bestellungen eines Tisches</h1>
+    <p>&nbsp;
+    </p>
+    <div>
+    <form asp-page-handler="table" method="post">
+        <div class="menue-text">Tisch: <input type="text" name="tableNr" value="@tableNr" class="smallinput" /> <button class="btn btn-primary">Bestellungen anzeigen</button></div>
+
+        <div>
+        
+        
+        <ul>
+            @foreach (var order in orders)
+            {
+                <div>Gericht: @order.Dish , Preis: @order.Price €  , Status:@order.State</div>
+            }
+        </ul>
+        </div>
+    </form>
+    </div>
+    
+    <div>
+        @ViewData["Error"]
+    </div>
+    <div>
+        @ViewData["Error2"]
+    </div>
+
+
+
+
+</div>

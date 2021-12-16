@@ -1,0 +1,104 @@
+version: '3.4'
+
+services:
+  redis:
+    image: redis:alpine
+    ports:
+      - "5776:6379"
+  dinner:
+    image: ${DOCKER_REGISTRY-}dinner
+    build:
+      context: .
+      dockerfile: Dinner/Dockerfile
+
+  dinner-dapr:
+    image: "daprio/daprd:latest"
+    command: [ "./daprd", "-app-id", "dinner", "-app-port", "80", "-components-path", "/components", "-placement-host-address", "dapr-placement:50000", "-config", "/configuration/config.yaml", ]
+    volumes:
+      - "./dapr/components:/components"
+      - "./dapr/configurations:/configuration"
+    depends_on:
+      - dinner
+      - redis
+      - zipkin
+    network_mode: "service:dinner"
+
+  restaurantservice:
+    image: ${DOCKER_REGISTRY-}restaurantservice
+    depends_on:
+      - redis
+    build:
+      context: .
+      dockerfile: RestaurantService/Dockerfile
+
+  restaurantservice-dapr:
+    image: "daprio/daprd:latest"
+    command: [ "./daprd", "-app-id", "restaurantservice", "-app-port", "80", "-components-path", "/components","-placement-host-address", "dapr-placement:50000", "-config", "/configuration/config.yaml" ]
+    volumes:
+      - "./dapr/components:/components"
+      - "./dapr/configurations:/configuration"
+    depends_on:
+      - restaurantservice
+    network_mode: "service:restaurantservice"  
+
+
+  kitchenactorservice:
+    image: ${DOCKER_REGISTRY-}kitchenactorservice
+    depends_on:
+      - redis
+    build:
+      context: .
+      dockerfile: KitchenActorService/Dockerfile
+
+  kitchenactorservice-dapr:
+    image: "daprio/daprd:latest"
+    command: [ "./daprd", "-app-id", "kitchenactorservice", "-app-port", "80", "-components-path", "/components","-placement-host-address", "dapr-placement:50000", "-config", "/configuration/config.yaml" ]
+    volumes:
+      - "./dapr/components:/components"
+      - "./dapr/configurations:/configuration"
+    depends_on:
+      - kitchenactorservice
+    network_mode: "service:kitchenactorservice"
+
+
+  tableactorservice:
+    image: ${DOCKER_REGISTRY-}tableactorservice
+    depends_on:
+      - redis
+    build:
+      context: .
+      dockerfile: TableActorService/Dockerfile
+
+  tableactorservice-dapr:
+    image: "daprio/daprd:latest"
+    command: [ "./daprd", "-app-id", "tableactorservice", "-app-port", "80", "-components-path", "/components","-placement-host-address", "dapr-placement:50000", "-config", "/configuration/config.yaml" ]
+    volumes:
+      - "./dapr/components:/components"
+      - "./dapr/configurations:/configuration"
+    depends_on:
+      - tableactorservice
+    network_mode: "service:tableactorservice"  
+
+  orderactorservice:
+    image: ${DOCKER_REGISTRY-}orderactorservice
+    depends_on:
+      - redis
+    build:
+      context: .
+      dockerfile: OrderActorService/Dockerfile
+
+  orderactorservice-dapr:
+    image: "daprio/daprd:latest"
+    command: [ "./daprd", "-app-id", "orderactorservice", "-app-port", "80", "-components-path", "/components","-placement-host-address", "dapr-placement:50000", "-config", "/configuration/config.yaml" ]
+    volumes:
+      - "./dapr/components:/components"
+      - "./dapr/configurations:/configuration"
+    depends_on:
+      - orderactorservice
+    network_mode: "service:orderactorservice"  
+
+  dapr-placement:
+    image: "daprio/dapr:latest"
+
+  zipkin:
+    image: openzipkin/zipkin-slim

@@ -1,0 +1,85 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+	<ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="assets\foto1.jpg" />
+    <None Remove="assets\foto10.jpg" />
+    <None Remove="assets\foto11.jpg" />
+    <None Remove="assets\foto14.jpg" />
+    <None Remove="assets\foto2.jpg" />
+    <None Remove="assets\foto3.jpg" />
+    <None Remove="assets\foto4.jpg" />
+    <None Remove="assets\foto5.jpg" />
+    <None Remove="assets\foto6.jpg" />
+    <None Remove="assets\foto7.jpg" />
+    <None Remove="assets\foto8.jpg" />
+    <None Remove="assets\foto9.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="assets\foto1.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\foto10.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\foto11.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\foto14.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\foto2.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\foto3.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\foto4.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\foto5.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\foto6.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\foto7.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\foto8.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\foto9.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapr.Actors" Version="1.5.0" />
+    <PackageReference Include="Dapr.AspNetCore" Version="1.5.0" />
+    <PackageReference Include="Dapr.Client" Version="1.5.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Domain\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Dinner.Contracts\Dinner.Contracts.csproj" />
+    <ProjectReference Include="..\KitchenActor.Contracts\KitchenActor.Contracts.csproj" />
+    <ProjectReference Include="..\OrderActor.Contracts\OrderActor.Contracts.csproj" />
+    <ProjectReference Include="..\RestaurantService.Contracts\RestaurantService.Contracts.csproj" />
+    <ProjectReference Include="..\TableActor.Contracts\TableActor.Contracts.csproj" />
+  </ItemGroup>
+
+</Project>

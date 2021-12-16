@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kitchenactorservice
+  labels:
+    app: kitchenactorservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kitchenactorservice
+  template:
+    metadata:
+      labels:
+        app: kitchenactorservice
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "kitchenactorservice"
+        dapr.io/app-port: "80"
+    spec:
+      containers:
+      - name: kitchenactorservice
+        image: daprsamples.azurecr.io/daprdinner/kitchenactorservice
+        ports:
+        - containerPort: 80
+        imagePullPolicy: Always
+        

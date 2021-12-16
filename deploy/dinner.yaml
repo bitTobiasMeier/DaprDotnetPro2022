@@ -1,0 +1,42 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: dinner
+  labels:
+    app: dinner
+spec:
+  selector:
+    app: dinner
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  type: LoadBalancer
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dinner
+  labels:
+    app: dinner
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: dinner
+  template:
+    metadata:
+      labels:
+        app: dinner
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "dinner"
+        dapr.io/app-port: "80"
+    spec:
+      containers:
+      - name: dinner
+        image: daprsamples.azurecr.io/daprdinner/dinner
+        ports:
+        - containerPort: 80
+        imagePullPolicy: Always

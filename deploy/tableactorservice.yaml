@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tableactorservice
+  labels:
+    app: tableactorservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tableactorservice
+  template:
+    metadata:
+      labels:
+        app: tableactorservice
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "tableactorservice"
+        dapr.io/app-port: "80"
+    spec:
+      containers:
+      - name: tableactorservice
+        image: daprsamples.azurecr.io/daprdinner/tableactorservice
+        ports:
+        - containerPort: 80
+        imagePullPolicy: Always
+        

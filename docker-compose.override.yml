@@ -1,0 +1,56 @@
+version: '3.4'
+
+services:
+  redis:
+    image: redis:alpine
+    ports:
+      - "5776:6379"
+  dinner:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+    ports:
+      - "17700:80"
+      - "17443:443"
+    volumes:
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro      
+      - "./RestaurantService/assets/:/app/wwwroot/dishes/"
+
+  restaurantservice:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    volumes:      
+      - "./RestaurantService/assets/:/dinnerdata"
+    ports:
+      - "17600:80"
+
+
+  kitchenactorservice:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "80"
+
+
+  tableactorservice:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "80"
+
+
+  orderactorservice:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "80"
+
+  dapr-placement:
+    command: ["./placement", "-port", "50000", "-log-level", "debug"]
+    ports:
+      - "50000:50000"
+
+  zipkin:
+    ports:
+      - "5411:9411"
+
