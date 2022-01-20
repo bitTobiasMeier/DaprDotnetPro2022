@@ -49,7 +49,7 @@ namespace Dinner.Pages
             catch (Exception ex)
             {
                 ViewData["Error"] = ex.Message + ex.StackTrace;
-                ViewData["Error"] = ex.InnerException?.Message;
+                ViewData["Error"] += ex.InnerException?.Message;
                 ViewData["Menu"] = Array.Empty<Dish>();
             }
         }

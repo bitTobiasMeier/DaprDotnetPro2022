@@ -64,7 +64,7 @@
         <ul>
             @foreach (var order in orders)
             {
-                <div>Gericht: @order.Dish , Preis: @order.Price €  , Status:@order.State</div>
+                <div>Gericht: @order.Dish , Preis: @order.Price €  , Status:@order.State @{ Html.DisplayText(order.ServedAt != null ? ", Serviert am " + order.ServedAt.Value.ToString("dd.MM.yyyy : hh:mm:ss") : "");}</div>
             }
         </ul>
         </div>

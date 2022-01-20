@@ -44,6 +44,14 @@ namespace TableActorService
             await StateManager.AddOrUpdateStateAsync(ListName, list, (key, value) => list, cancellationToken);
         }
 
+        public async Task ServeAsync(string orderId, DateTime servedAt, CancellationToken cancellationToken)
+        {
+            var list = await GetTableOrderContractsAsync(cancellationToken);
+            var entry = list.First(order => order.OrderId == orderId);
+            entry.ServedAt = servedAt;
+            await StateManager.AddOrUpdateStateAsync(ListName, list, (key, value) => list, cancellationToken);
+        }
+
         private async Task<List<TableOrder>> GetTableOrderContractsAsync(CancellationToken cancellationToken)
         {
             var listCond =

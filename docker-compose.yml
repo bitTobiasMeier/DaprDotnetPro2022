@@ -12,7 +12,7 @@ services:
       dockerfile: Dinner/Dockerfile
 
   dinner-dapr:
-    image: "daprio/daprd:latest"
+    image: "daprio/daprd:1.5.1"
     command: [ "./daprd", "-app-id", "dinner", "-app-port", "80", "-components-path", "/components", "-placement-host-address", "dapr-placement:50000", "-config", "/configuration/config.yaml", ]
     volumes:
       - "./dapr/components:/components"
@@ -32,7 +32,7 @@ services:
       dockerfile: RestaurantService/Dockerfile
 
   restaurantservice-dapr:
-    image: "daprio/daprd:latest"
+    image: "daprio/daprd:1.5.1"
     command: [ "./daprd", "-app-id", "restaurantservice", "-app-port", "80", "-components-path", "/components","-placement-host-address", "dapr-placement:50000", "-config", "/configuration/config.yaml" ]
     volumes:
       - "./dapr/components:/components"
@@ -51,7 +51,7 @@ services:
       dockerfile: KitchenActorService/Dockerfile
 
   kitchenactorservice-dapr:
-    image: "daprio/daprd:latest"
+    image: "daprio/daprd:1.5.1"
     command: [ "./daprd", "-app-id", "kitchenactorservice", "-app-port", "80", "-components-path", "/components","-placement-host-address", "dapr-placement:50000", "-config", "/configuration/config.yaml" ]
     volumes:
       - "./dapr/components:/components"
@@ -70,7 +70,7 @@ services:
       dockerfile: TableActorService/Dockerfile
 
   tableactorservice-dapr:
-    image: "daprio/daprd:latest"
+    image: "daprio/daprd:1.5.1"
     command: [ "./daprd", "-app-id", "tableactorservice", "-app-port", "80", "-components-path", "/components","-placement-host-address", "dapr-placement:50000", "-config", "/configuration/config.yaml" ]
     volumes:
       - "./dapr/components:/components"
@@ -88,7 +88,7 @@ services:
       dockerfile: OrderActorService/Dockerfile
 
   orderactorservice-dapr:
-    image: "daprio/daprd:latest"
+    image: "daprio/daprd:1.5.1"
     command: [ "./daprd", "-app-id", "orderactorservice", "-app-port", "80", "-components-path", "/components","-placement-host-address", "dapr-placement:50000", "-config", "/configuration/config.yaml" ]
     volumes:
       - "./dapr/components:/components"
@@ -98,7 +98,7 @@ services:
     network_mode: "service:orderactorservice"  
 
   dapr-placement:
-    image: "daprio/dapr:latest"
+    image: "daprio/dapr:1.5.1"
 
   zipkin:
     image: openzipkin/zipkin-slim

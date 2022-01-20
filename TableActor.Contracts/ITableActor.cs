@@ -9,5 +9,7 @@ namespace TableActor.Contracts
         Task<List<TableOrder>> GetOrdersAsync(CancellationToken cancellationToken);
 
         Task SetStateAsync(string orderId, string state, CancellationToken cancellationToken);
+
+        Task ServeAsync(string orderId, DateTime servedAt, CancellationToken cancellationToken);
     }
 }

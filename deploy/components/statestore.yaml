@@ -7,7 +7,7 @@ spec:
   version: v1
   metadata:  
   - name: redisHost
-    value: redis-master:6379
+    value: redis-master.dinnerdemo.svc.cluster.local:6379
   - name: redisPassword
     secretKeyRef:
       name: redis
@@ -17,3 +17,4 @@ spec:
     
 auth:
   secretStore: kubernetes
+
